@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌺 Feliz Cumpleaños Carola 🌺</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,900;1,400;1,700;1,900&family=Dancing+Script:wght@600;700&family=Cormorant+Garamond:ital,wght@1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --magenta: #C2185B;
+  --hot-pink: #E91E8C;
+  --gold: #F5A623;
+  --turquoise: #00BCD4;
+  --coral: #FF5722;
+  --purple: #7B1FA2;
+  --green: #2E7D32;
+  --dark: #06020C;
+  --cream: #FFF8DC;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  min-height: 100vh;
+  background: var(--dark);
+  overflow-x: hidden;
+  cursor: none;
+  font-family: 'Playfair Display', serif;
+}
+
+#cursor {
+  position: fixed;
+  font-size: 28px;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.12s ease;
+  user-select: none;
+  line-height: 1;
+}
+#cursor.click { transform: translate(-50%,-50%) scale(1.5) rotate(20deg); }
+
+.bg {
+  position: fixed; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse at 15% 15%, rgba(120, 0, 60, 0.85) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 85%, rgba(40, 90, 20, 0.65) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 10%, rgba(40, 0, 100, 0.55) 0%, transparent 50%),
+    radial-gradient(ellipse at 15% 90%, rgba(120, 50, 0, 0.55) 0%, transparent 50%),
+    #06020C;
+}
+
+.blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(110px);
+  z-index: 0;
+  opacity: 0;
+  animation: blobFade 2.5s ease forwards;
+}
+.blob-1 {
+  width: 550px; height: 550px;
+  background: radial-gradient(circle, #B71C1C, #5D0020);
+  top: -180px; left: -180px;
+  animation: blobFade 2.5s ease forwards, blobDrift1 18s 2.5s ease-in-out infinite;
+}
+.blob-2 {
+  width: 450px; height: 450px;
+  background: radial-gradient(circle, #E65100, #7B3F00);
+  bottom: -150px; right: -150px;
+  animation: blobFade 2.5s 0.4s ease forwards, blobDrift2 22s 2.9s ease-in-out infinite;
+}
+.blob-3 {
+  width: 380px; height: 380px;
+  background: radial-gradient(circle, #006064, #001820);
+  top: 40%; left: 65%;
+  animation: blobFade 2.5s 0.8s ease forwards, blobDrift3 15s 3.3s ease-in-out infinite;
+}
+.blob-4 {
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, #4A148C, #1A0040);
+  top: 20%; left: 5%;
+  animation: blobFade 2.5s 1.2s ease forwards, blobDrift4 19s 3.7s ease-in-out infinite;
+}
+
+@keyframes blobFade { to { opacity: 0.28; } }
+@keyframes blobDrift1 { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(90px,80px) scale(1.1)} 66%{transform:translate(40px,160px) scale(0.92)} }
+@keyframes blobDrift2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-110px,-90px) scale(1.15)} }
+@keyframes blobDrift3 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-70px,70px) scale(1.3)} }
+@keyframes blobDrift4 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(60px,-80px) scale(1.1)} }
+
+#canvas {
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+#fireworks {
+  position: fixed; inset: 0;
+  z-index: 2;
+  cursor: none;
+}
+
+#picado {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 90px;
+  z-index: 20;
+  pointer-events: none;
+  overflow: hidden;
+}
+.picado-string {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #FFD700, #FF6B9D, #00BCD4, #FFD700, #FF9800, #FFD700);
+  background-size: 200%;
+  animation: stringShimmer 4s linear infinite;
+  box-shadow: 0 2px 8px rgba(255,215,0,0.5);
+}
+@keyframes stringShimmer { to { background-position: 200%; } }
+
+.picado-flag {
+  position: absolute;
+  top: 5px;
+  width: 55px;
+  height: 70px;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top center;
+}
+.picado-flag.sway-a { animation: swayA 2.8s ease-in-out infinite; }
+.picado-flag.sway-b { animation: swayB 3.2s ease-in-out infinite; }
+.picado-flag.sway-c { animation: swayC 2.5s ease-in-out infinite; }
+
+@keyframes swayA { 0%,100%{transform:rotate(-7deg)} 50%{transform:rotate(7deg)} }
+@keyframes swayB { 0%,100%{transform:rotate(6deg)} 50%{transform:rotate(-8deg)} }
+@keyframes swayC { 0%,100%{transform:rotate(-5deg)} 50%{transform:rotate(9deg)} }
+
+.deco {
+  position: fixed; z-index: 3; pointer-events: none;
+  opacity: 0;
+  animation: decoIn 1.2s ease forwards;
+}
+.deco.tl { top: 88px; left: 0; animation-delay: 0.6s; }
+.deco.tr { top: 88px; right: 0; animation-delay: 0.8s; }
+.deco.bl { bottom: 0; left: 0; animation-delay: 1s; }
+.deco.br { bottom: 0; right: 0; animation-delay: 1.2s; }
+@keyframes decoIn { to { opacity: 0.7; } }
+.deco svg { animation: decoBreath 6s ease-in-out infinite; }
+.deco.tr svg { animation-delay: -2s; }
+.deco.bl svg { animation-delay: -4s; }
+.deco.br svg { animation-delay: -1s; }
+@keyframes decoBreath { 0%,100%{transform:scale(1) rotate(0deg)} 50%{transform:scale(1.06) rotate(4deg)} }
+
+main {
+  position: relative; z-index: 10;
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 110px 24px 70px;
+}
+
+.card-shell {
+  position: relative;
+  max-width: 680px; width: 100%;
+  border-radius: 6px;
+  padding: 3px;
+  overflow: hidden;
+  box-shadow: 0 30px 100px rgba(0,0,0,0.9), 0 0 60px rgba(194,24,91,0.3);
+}
+.card-shell::before {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  width: 200%; height: 200%;
+  background: conic-gradient(from 0deg, #C2185B, #F5A623, #00BCD4, #FF5722, #E91E8C, #F9A825, #C2185B);
+  animation: rotateBorder 5s linear infinite;
+  z-index: 0;
+}
+@keyframes rotateBorder { to { transform: rotate(360deg); } }
+
+.card {
+  position: relative; z-index: 1;
+  background: rgba(6, 2, 12, 0.92);
+  backdrop-filter: blur(24px);
+  border-radius: 4px;
+  padding: 52px 52px 48px;
+  text-align: center;
+  box-shadow: inset 0 0 60px rgba(194,24,91,0.07);
+}
+
+.orn {
+  position: absolute; width: 54px; height: 54px;
+  pointer-events: none;
+}
+.orn.tl { top: -1px; left: -1px; }
+.orn.tr { top: -1px; right: -1px; transform: scaleX(-1); }
+.orn.bl { bottom: -1px; left: -1px; transform: scaleY(-1); }
+.orn.br { bottom: -1px; right: -1px; transform: scale(-1,-1); }
+
+.pre {
+  font-family: 'Dancing Script', cursive;
+  font-size: 0.95rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(245,166,35,0.75);
+  margin-bottom: 10px;
+  opacity: 0;
+  animation: riseUp 0.9s ease forwards 0.5s;
+}
+
+.title {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 900;
+  font-size: clamp(3rem, 9vw, 5.8rem);
+  line-height: 0.95;
+  margin-bottom: 4px;
+  background: linear-gradient(135deg, #FFD700 0%, #FF69B4 35%, #FFD700 65%, #FF9800 100%);
+  background-size: 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: riseUp 0.9s ease forwards 0.8s, goldFlow 5s ease-in-out 1.7s infinite;
+  opacity: 0;
+  filter: drop-shadow(0 0 25px rgba(245,166,35,0.35));
+}
+
+@keyframes goldFlow { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+
+.portrait-section {
+  display: flex; justify-content: center;
+  margin: 24px 0 20px;
+  opacity: 0;
+  animation: riseUp 0.9s ease forwards 1.1s;
+}
+.portrait-wrap {
+  position: relative;
+  width: 186px; height: 218px;
+}
+.halo {
+  position: absolute;
+  inset: -35px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(245,166,35,0.28) 0%, transparent 65%);
+  animation: haloPulse 3.5s ease-in-out infinite;
+}
+.halo2 {
+  position: absolute;
+  inset: -18px;
+  border-radius: 50%;
+  border: 1px solid rgba(245,166,35,0.2);
+  animation: haloRing 8s linear infinite;
+}
+@keyframes haloPulse { 0%,100%{transform:scale(1);opacity:0.5} 50%{transform:scale(1.18);opacity:1} }
+@keyframes haloRing { to {transform:rotate(360deg)} }
+
+.divider {
+  display: flex; align-items: center; gap: 14px;
+  margin: 18px 0;
+  opacity: 0;
+  animation: riseUp 0.9s ease forwards 1.4s;
+}
+.div-line {
+  flex: 1; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(245,166,35,0.45), transparent);
+}
+.div-icon { font-size: 1.3rem; }
+
+.quote-wrap {
+  margin: 0 0 18px;
+  padding: 14px 20px;
+  border-left: 3px solid var(--magenta);
+  background: rgba(194,24,91,0.07);
+  text-align: left;
+  opacity: 0;
+  animation: riseUp 0.9s ease forwards 1.6s;
+}
+.quote-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: rgba(245,166,35,0.9);
+  line-height: 1.65;
+}
+.quote-attr {
+  font-family: 'Dancing Script', cursive;
+  font-size: 0.85rem;
+  color: rgba(245,166,35,0.5);
+  margin-top: 5px;
+  text-align: right;
+}
+
+.message {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.08rem;
+  color: rgba(255,248,220,0.88);
+  line-height: 1.85;
+  margin-bottom: 22px;
+  opacity: 0;
+  animation: riseUp 0.9s ease forwards 1.85s;
+}
+
+.wish {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: var(--hot-pink);
+  text-shadow: 0 0 25px rgba(233,30,140,0.6), 0 0 50px rgba(233,30,140,0.3);
+  opacity: 0;
+  animation: riseUp 0.9s ease forwards 2.1s;
+}
+.wish span {
+  display: inline-block;
+  animation: floatIcon 2.5s ease-in-out infinite;
+}
+.wish span:nth-child(2) { animation-delay: -0.8s; }
+.wish span:nth-child(3) { animation-delay: -1.6s; }
+@keyframes floatIcon { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+
+.click-hint {
+  margin-top: 18px;
+  font-family: 'Dancing Script', cursive;
+  font-size: 0.85rem;
+  color: rgba(245,166,35,0.35);
+  letter-spacing: 0.1em;
+  opacity: 0;
+  animation: riseUp 0.9s ease forwards 2.5s, blink 3s 3.4s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:0.35} 50%{opacity:0.65} }
+
+@keyframes riseUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 620px) {
+  .card { padding: 38px 22px 34px; }
+  .deco { display: none; }
+  .card-shell { max-width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<audio id="bg-audio" src="mañanitas.mp3" loop></audio>
+
+<div id="cursor">🌸</div>
+
+<div class="bg"></div>
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+<div class="blob blob-4"></div>
+
+<canvas id="canvas"></canvas>
+<canvas id="fireworks"></canvas>
+
+<div id="picado"><div class="picado-string"></div></div>
+
+<div class="deco tl">
+  <svg width="190" height="190" viewBox="0 0 190 190" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(65,130)">
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#C2185B" transform="rotate(0)"/>
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#D81B60" transform="rotate(45)"/>
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#C2185B" transform="rotate(90)"/>
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#D81B60" transform="rotate(135)"/>
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#C2185B" transform="rotate(180)"/>
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#D81B60" transform="rotate(225)"/>
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#C2185B" transform="rotate(270)"/>
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#D81B60" transform="rotate(315)"/>
+      <circle cx="0" cy="0" r="13" fill="#F5A623"/><circle cx="0" cy="0" r="6" fill="#FFD700"/>
+    </g>
+    <g transform="translate(128,74)">
+      <ellipse cx="0" cy="-22" rx="10" ry="20" fill="#FF5722" transform="rotate(0)"/>
+      <ellipse cx="0" cy="-22" rx="10" ry="20" fill="#FF7043" transform="rotate(60)"/>
+      <ellipse cx="0" cy="-22" rx="10" ry="20" fill="#FF5722" transform="rotate(120)"/>
+      <ellipse cx="0" cy="-22" rx="10" ry="20" fill="#FF7043" transform="rotate(180)"/>
+      <ellipse cx="0" cy="-22" rx="10" ry="20" fill="#FF5722" transform="rotate(240)"/>
+      <ellipse cx="0" cy="-22" rx="10" ry="20" fill="#FF7043" transform="rotate(300)"/>
+      <circle cx="0" cy="0" r="10" fill="#F5A623"/><circle cx="0" cy="0" r="5" fill="#FFD700"/>
+    </g>
+    <g transform="translate(30,62)">
+      <ellipse cx="0" cy="-16" rx="8" ry="15" fill="#E91E8C" transform="rotate(0)"/>
+      <ellipse cx="0" cy="-16" rx="8" ry="15" fill="#F06292" transform="rotate(72)"/>
+      <ellipse cx="0" cy="-16" rx="8" ry="15" fill="#E91E8C" transform="rotate(144)"/>
+      <ellipse cx="0" cy="-16" rx="8" ry="15" fill="#F06292" transform="rotate(216)"/>
+      <ellipse cx="0" cy="-16" rx="8" ry="15" fill="#E91E8C" transform="rotate(288)"/>
+      <circle cx="0" cy="0" r="8" fill="#FFD700"/>
+    </g>
+    <ellipse cx="45" cy="150" rx="20" ry="10" fill="#2E7D32" transform="rotate(-35,45,150)" opacity="0.85"/>
+    <ellipse cx="95" cy="162" rx="24" ry="10" fill="#388E3C" transform="rotate(8,95,162)" opacity="0.85"/>
+    <ellipse cx="138" cy="108" rx="16" ry="8" fill="#2E7D32" transform="rotate(-55,138,108)" opacity="0.85"/>
+    <ellipse cx="20" cy="95" rx="14" ry="7" fill="#1B5E20" transform="rotate(25,20,95)" opacity="0.85"/>
+  </svg>
+</div>
+
+<div class="deco tr">
+  <svg width="190" height="190" viewBox="0 0 190 190" xmlns="http://www.w3.org/2000/svg" style="transform:scaleX(-1)">
+    <g transform="translate(65,130)">
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#00BCD4" transform="rotate(0)"/>
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#0097A7" transform="rotate(45)"/>
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#00BCD4" transform="rotate(90)"/>
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#0097A7" transform="rotate(135)"/>
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#00BCD4" transform="rotate(180)"/>
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#0097A7" transform="rotate(225)"/>
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#00BCD4" transform="rotate(270)"/>
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#0097A7" transform="rotate(315)"/>
+      <circle cx="0" cy="0" r="13" fill="#F5A623"/><circle cx="0" cy="0" r="6" fill="#FFD700"/>
+    </g>
+    <g transform="translate(128,74)">
+      <ellipse cx="0" cy="-22" rx="10" ry="20" fill="#7B1FA2" transform="rotate(0)"/>
+      <ellipse cx="0" cy="-22" rx="10" ry="20" fill="#9C27B0" transform="rotate(60)"/>
+      <ellipse cx="0" cy="-22" rx="10" ry="20" fill="#7B1FA2" transform="rotate(120)"/>
+      <ellipse cx="0" cy="-22" rx="10" ry="20" fill="#9C27B0" transform="rotate(180)"/>
+      <ellipse cx="0" cy="-22" rx="10" ry="20" fill="#7B1FA2" transform="rotate(240)"/>
+      <ellipse cx="0" cy="-22" rx="10" ry="20" fill="#9C27B0" transform="rotate(300)"/>
+      <circle cx="0" cy="0" r="10" fill="#F5A623"/><circle cx="0" cy="0" r="5" fill="#FFD700"/>
+    </g>
+    <g transform="translate(30,62)">
+      <ellipse cx="0" cy="-16" rx="8" ry="15" fill="#F9A825" transform="rotate(0)"/>
+      <ellipse cx="0" cy="-16" rx="8" ry="15" fill="#FBC02D" transform="rotate(72)"/>
+      <ellipse cx="0" cy="-16" rx="8" ry="15" fill="#F9A825" transform="rotate(144)"/>
+      <ellipse cx="0" cy="-16" rx="8" ry="15" fill="#FBC02D" transform="rotate(216)"/>
+      <ellipse cx="0" cy="-16" rx="8" ry="15" fill="#F9A825" transform="rotate(288)"/>
+      <circle cx="0" cy="0" r="8" fill="#C2185B"/>
+    </g>
+    <ellipse cx="45" cy="150" rx="20" ry="10" fill="#2E7D32" transform="rotate(-35,45,150)" opacity="0.85"/>
+    <ellipse cx="95" cy="162" rx="24" ry="10" fill="#388E3C" transform="rotate(8,95,162)" opacity="0.85"/>
+    <ellipse cx="138" cy="108" rx="16" ry="8" fill="#2E7D32" transform="rotate(-55,138,108)" opacity="0.85"/>
+  </svg>
+</div>
+
+<div class="deco bl" style="transform:scaleY(-1)">
+  <svg width="190" height="190" viewBox="0 0 190 190" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(65,130)">
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#FF5722" transform="rotate(0)"/>
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#FF7043" transform="rotate(45)"/>
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#FF5722" transform="rotate(90)"/>
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#FF7043" transform="rotate(135)"/>
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#FF5722" transform="rotate(180)"/>
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#FF7043" transform="rotate(225)"/>
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#FF5722" transform="rotate(270)"/>
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#FF7043" transform="rotate(315)"/>
+      <circle cx="0" cy="0" r="13" fill="#C2185B"/><circle cx="0" cy="0" r="6" fill="#E91E8C"/>
+    </g>
+    <g transform="translate(128,74)">
+      <ellipse cx="0" cy="-22" rx="10" ry="20" fill="#C2185B" transform="rotate(0)"/>
+      <ellipse cx="0" cy="-22" rx="10" ry="20" fill="#E91E8C" transform="rotate(60)"/>
+      <ellipse cx="0" cy="-22" rx="10" ry="20" fill="#C2185B" transform="rotate(120)"/>
+      <ellipse cx="0" cy="-22" rx="10" ry="20" fill="#E91E8C" transform="rotate(180)"/>
+      <ellipse cx="0" cy="-22" rx="10" ry="20" fill="#C2185B" transform="rotate(240)"/>
+      <ellipse cx="0" cy="-22" rx="10" ry="20" fill="#E91E8C" transform="rotate(300)"/>
+      <circle cx="0" cy="0" r="10" fill="#F5A623"/><circle cx="0" cy="0" r="5" fill="#FFD700"/>
+    </g>
+    <g transform="translate(30,62)">
+      <ellipse cx="0" cy="-16" rx="8" ry="15" fill="#00BCD4" transform="rotate(0)"/>
+      <ellipse cx="0" cy="-16" rx="8" ry="15" fill="#0097A7" transform="rotate(72)"/>
+      <ellipse cx="0" cy="-16" rx="8" ry="15" fill="#00BCD4" transform="rotate(144)"/>
+      <ellipse cx="0" cy="-16" rx="8" ry="15" fill="#0097A7" transform="rotate(216)"/>
+      <ellipse cx="0" cy="-16" rx="8" ry="15" fill="#00BCD4" transform="rotate(288)"/>
+      <circle cx="0" cy="0" r="8" fill="#F5A623"/>
+    </g>
+    <ellipse cx="45" cy="150" rx="20" ry="10" fill="#2E7D32" transform="rotate(-35,45,150)" opacity="0.85"/>
+    <ellipse cx="95" cy="162" rx="24" ry="10" fill="#388E3C" transform="rotate(8,95,162)" opacity="0.85"/>
+    <ellipse cx="138" cy="108" rx="16" ry="8" fill="#2E7D32" transform="rotate(-55,138,108)" opacity="0.85"/>
+  </svg>
+</div>
+
+<div class="deco br" style="transform:scale(-1,-1)">
+  <svg width="190" height="190" viewBox="0 0 190 190" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(65,130)">
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#7B1FA2" transform="rotate(0)"/>
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#9C27B0" transform="rotate(45)"/>
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#7B1FA2" transform="rotate(90)"/>
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#9C27B0" transform="rotate(135)"/>
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#7B1FA2" transform="rotate(180)"/>
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#9C27B0" transform="rotate(225)"/>
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#7B1FA2" transform="rotate(270)"/>
+      <ellipse cx="0" cy="-32" rx="14" ry="30" fill="#9C27B0" transform="rotate(315)"/>
+      <circle cx="0" cy="0" r="13" fill="#F5A623"/><circle cx="0" cy="0" r="6" fill="#FFD700"/>
+    </g>
+    <g transform="translate(128,74)">
+      <ellipse cx="0" cy="-22" rx="10" ry="20" fill="#C2185B" transform="rotate(0)"/>
+      <ellipse cx="0" cy="-22" rx="10" ry="20" fill="#D81B60" transform="rotate(60)"/>
+      <ellipse cx="0" cy="-22" rx="10" ry="20" fill="#C2185B" transform="rotate(120)"/>
+      <ellipse cx="0" cy="-22" rx="10" ry="20" fill="#D81B60" transform="rotate(180)"/>
+      <ellipse cx="0" cy="-22" rx="10" ry="20" fill="#C2185B" transform="rotate(240)"/>
+      <ellipse cx="0" cy="-22" rx="10" ry="20" fill="#D81B60" transform="rotate(300)"/>
+      <circle cx="0" cy="0" r="10" fill="#F5A623"/><circle cx="0" cy="0" r="5" fill="#FFD700"/>
+    </g>
+    <g transform="translate(30,62)">
+      <ellipse cx="0" cy="-16" rx="8" ry="15" fill="#FF5722" transform="rotate(0)"/>
+      <ellipse cx="0" cy="-16" rx="8" ry="15" fill="#FF7043" transform="rotate(72)"/>
+      <ellipse cx="0" cy="-16" rx="8" ry="15" fill="#FF5722" transform="rotate(144)"/>
+      <ellipse cx="0" cy="-16" rx="8" ry="15" fill="#FF7043" transform="rotate(216)"/>
+      <ellipse cx="0" cy="-16" rx="8" ry="15" fill="#FF5722" transform="rotate(288)"/>
+      <circle cx="0" cy="0" r="8" fill="#FFD700"/>
+    </g>
+    <ellipse cx="45" cy="150" rx="20" ry="10" fill="#2E7D32" transform="rotate(-35,45,150)" opacity="0.85"/>
+    <ellipse cx="95" cy="162" rx="24" ry="10" fill="#388E3C" transform="rotate(8,95,162)" opacity="0.85"/>
+    <ellipse cx="138" cy="108" rx="16" ry="8" fill="#2E7D32" transform="rotate(-55,138,108)" opacity="0.85"/>
+  </svg>
+</div>
+
+<main>
+  <div class="card-shell">
+    <div class="card">
+
+      <div class="orn tl"><svg viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 2 L52 2" stroke="#F5A623" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M2 2 L2 52" stroke="#F5A623" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M2 2 Q28 2 28 28" stroke="#C2185B" stroke-width="1.5" fill="none"/>
+        <circle cx="28" cy="28" r="5" fill="#F5A623" opacity="0.8"/>
+        <circle cx="10" cy="10" r="4" fill="#E91E8C"/>
+        <circle cx="10" cy="10" r="2" fill="#FFD700"/>
+      </svg></div>
+      <div class="orn tr"><svg viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 2 L52 2" stroke="#F5A623" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M2 2 L2 52" stroke="#F5A623" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M2 2 Q28 2 28 28" stroke="#C2185B" stroke-width="1.5" fill="none"/>
+        <circle cx="28" cy="28" r="5" fill="#F5A623" opacity="0.8"/>
+        <circle cx="10" cy="10" r="4" fill="#E91E8C"/>
+        <circle cx="10" cy="10" r="2" fill="#FFD700"/>
+      </svg></div>
+      <div class="orn bl"><svg viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 2 L52 2" stroke="#F5A623" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M2 2 L2 52" stroke="#F5A623" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M2 2 Q28 2 28 28" stroke="#C2185B" stroke-width="1.5" fill="none"/>
+        <circle cx="28" cy="28" r="5" fill="#F5A623" opacity="0.8"/>
+        <circle cx="10" cy="10" r="4" fill="#E91E8C"/>
+        <circle cx="10" cy="10" r="2" fill="#FFD700"/>
+      </svg></div>
+      <div class="orn br"><svg viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 2 L52 2" stroke="#F5A623" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M2 2 L2 52" stroke="#F5A623" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M2 2 Q28 2 28 28" stroke="#C2185B" stroke-width="1.5" fill="none"/>
+        <circle cx="28" cy="28" r="5" fill="#F5A623" opacity="0.8"/>
+        <circle cx="10" cy="10" r="4" fill="#E91E8C"/>
+        <circle cx="10" cy="10" r="2" fill="#FFD700"/>
+      </svg></div>
+
+      <div class="pre">✦ Con todo el amor del universo ✦</div>
+      <h1 class="title">Feliz<br>Cumpleaños</h1>
+
+      <div class="portrait-section">
+        <div class="portrait-wrap">
+          <div class="halo"></div>
+          <div class="halo2"></div>
+          <img src="carola.jpeg" alt="Carola" style="width:186px;height:218px;object-fit:cover;object-position:top;border-radius:50% 50% 40% 40%;position:relative;z-index:1;box-shadow:0 0 30px rgba(245,166,35,0.5);" />
+        </div>
+      </div>
+
+      <div class="divider">
+        <div class="div-line"></div>
+        <span class="div-icon">🌺</span>
+        <div class="div-line"></div>
+      </div>
+
+      <div class="quote-wrap">
+        <div class="quote-text">"Pies, ¿para qué los quiero, si tengo alas pa' volar?"</div>
+        <div class="quote-attr">— Frida Kahlo</div>
+      </div>
+
+      <p class="message">
+        Hoy el universo entero celebra que existes.<br>
+        Que tu día esté lleno de flores, colores vivos,<br>
+        mariposas y toda la magia que solo tú puedes crear.<br>
+        Como Frida, eres arte puro y fuerza infinita. 🦋
+      </p>
+
+      <div class="wish">
+        <span>🌸</span> ¡Feliz Cumpleaños, hermosa! <span>🌺</span>
+      </div>
+
+      <div class="click-hint">✦ haz clic en cualquier lugar para más fuegos artificiales ✦</div>
+    </div>
+  </div>
+</main>
+
+<script>
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top  = e.clientY + 'px';
+});
+document.addEventListener('mousedown', () => cursor.classList.add('click'));
+document.addEventListener('mouseup',   () => cursor.classList.remove('click'));
+
+const PICADO_COLORS = ['#C2185B','#F9A825','#00BCD4','#FF5722','#7B1FA2','#2E7D32','#E91E63','#FF9800','#1565C0'];
+const picadoEl = document.getElementById('picado');
+const flagW = 55, gap = 5;
+const count = Math.ceil(window.innerWidth / (flagW + gap)) + 1;
+const swayClasses = ['sway-a','sway-b','sway-c'];
+
+for (let i = 0; i < count; i++) {
+  const flag = document.createElement('div');
+  flag.className = 'picado-flag ' + swayClasses[i % 3];
+  flag.style.left = (i * (flagW + gap)) + 'px';
+  flag.style.background = PICADO_COLORS[i % PICADO_COLORS.length];
+  flag.style.animationDelay = (Math.random() * 2) + 's';
+  const hole = document.createElement('div');
+  hole.style.cssText = 'position:absolute;top:14px;left:50%;transform:translateX(-50%);width:18px;height:18px;background:rgba(0,0,0,0.35);border-radius:50%;';
+  flag.appendChild(hole);
+  const hole2 = document.createElement('div');
+  hole2.style.cssText = 'position:absolute;top:36px;left:50%;transform:translateX(-50%);width:10px;height:10px;background:rgba(0,0,0,0.25);border-radius:50%;';
+  flag.appendChild(hole2);
+  picadoEl.appendChild(flag);
+}
+
+const pCanvas = document.getElementById('canvas');
+const pCtx    = pCanvas.getContext('2d');
+const fCanvas = document.getElementById('fireworks');
+const fCtx    = fCanvas.getContext('2d');
+
+function resizeCanvases() {
+  pCanvas.width = fCanvas.width = window.innerWidth;
+  pCanvas.height = fCanvas.height = window.innerHeight;
+}
+resizeCanvases();
+window.addEventListener('resize', resizeCanvases);
+
+const PETAL_COLORS = ['#C2185B','#F9A825','#FF5722','#E91E8C','#FFD700','#FF69B4','#FF8C00','#DA70D6'];
+
+class Petal {
+  constructor(randomY = false) { this.reset(randomY); }
+  reset(randomY = false) {
+    this.x = Math.random() * pCanvas.width;
+    this.y = randomY ? Math.random() * pCanvas.height : -20;
+    this.size  = 4 + Math.random() * 9;
+    this.vx    = (Math.random() - 0.5) * 1.8;
+    this.vy    = 0.8 + Math.random() * 1.8;
+    this.rot   = Math.random() * 360;
+    this.rotV  = (Math.random() - 0.5) * 4;
+    this.alpha = 0.5 + Math.random() * 0.5;
+    this.color = PETAL_COLORS[Math.floor(Math.random() * PETAL_COLORS.length)];
+    this.kind  = Math.floor(Math.random() * 4);
+    this.wave  = Math.random() * Math.PI * 2;
+  }
+  update(t) {
+    this.x += this.vx + Math.sin(t * 0.0008 + this.wave) * 0.8;
+    this.y += this.vy;
+    this.rot += this.rotV;
+    if (this.y > pCanvas.height + 25) this.reset();
+  }
+  draw() {
+    pCtx.save();
+    pCtx.globalAlpha = this.alpha;
+    pCtx.translate(this.x, this.y);
+    pCtx.rotate(this.rot * Math.PI / 180);
+    pCtx.fillStyle = this.color;
+    if (this.kind === 0) {
+      pCtx.beginPath();
+      pCtx.ellipse(0, 0, this.size * 0.45, this.size, 0, 0, Math.PI * 2);
+      pCtx.fill();
+    } else if (this.kind === 1) {
+      for (let i = 0; i < 5; i++) {
+        pCtx.save();
+        pCtx.rotate((i / 5) * Math.PI * 2);
+        pCtx.beginPath();
+        pCtx.ellipse(0, -this.size * 0.55, this.size * 0.28, this.size * 0.55, 0, 0, Math.PI * 2);
+        pCtx.fill();
+        pCtx.restore();
+      }
+      pCtx.fillStyle = '#FFD700';
+      pCtx.beginPath();
+      pCtx.arc(0, 0, this.size * 0.28, 0, Math.PI * 2);
+      pCtx.fill();
+    } else if (this.kind === 2) {
+      pCtx.beginPath();
+      pCtx.moveTo(0, -this.size);
+      pCtx.lineTo(this.size * 0.5, 0);
+      pCtx.lineTo(0, this.size);
+      pCtx.lineTo(-this.size * 0.5, 0);
+      pCtx.closePath();
+      pCtx.fill();
+    } else {
+      const s = this.size, r = s * 0.4;
+      pCtx.beginPath();
+      for (let i = 0; i < 5; i++) {
+        const a1 = (i * 4 * Math.PI / 5) - Math.PI / 2;
+        const a2 = ((i * 4 + 2) * Math.PI / 5) - Math.PI / 2;
+        if (i === 0) pCtx.moveTo(Math.cos(a1) * s, Math.sin(a1) * s);
+        else pCtx.lineTo(Math.cos(a1) * s, Math.sin(a1) * s);
+        pCtx.lineTo(Math.cos(a2) * r, Math.sin(a2) * r);
+      }
+      pCtx.closePath();
+      pCtx.fill();
+    }
+    pCtx.restore();
+  }
+}
+
+const petals = Array.from({ length: 55 }, () => new Petal(true));
+
+const FW_COLORS = ['#C2185B','#F9A825','#00BCD4','#FF5722','#E91E8C','#FFD700','#FF69B4','#7B1FA2','#00E5FF'];
+
+class Particle {
+  constructor(x, y, color) {
+    const angle = Math.random() * Math.PI * 2;
+    const speed = 1.5 + Math.random() * 5;
+    this.x = x; this.y = y;
+    this.vx = Math.cos(angle) * speed;
+    this.vy = Math.sin(angle) * speed;
+    this.alpha = 1;
+    this.decay = 0.012 + Math.random() * 0.012;
+    this.color = color;
+    this.size  = 2 + Math.random() * 3;
+    this.tail  = [];
+  }
+  update() {
+    this.tail.push({ x: this.x, y: this.y });
+    if (this.tail.length > 6) this.tail.shift();
+    this.x += this.vx;
+    this.y += this.vy;
+    this.vy += 0.08;
+    this.vx *= 0.99;
+    this.alpha -= this.decay;
+  }
+  draw() {
+    this.tail.forEach((p, i) => {
+      fCtx.save();
+      fCtx.globalAlpha = (this.alpha * i / this.tail.length) * 0.4;
+      fCtx.fillStyle = this.color;
+      fCtx.beginPath();
+      fCtx.arc(p.x, p.y, this.size * 0.5, 0, Math.PI * 2);
+      fCtx.fill();
+      fCtx.restore();
+    });
+    fCtx.save();
+    fCtx.globalAlpha = this.alpha;
+    fCtx.fillStyle = this.color;
+    fCtx.shadowBlur = 8;
+    fCtx.shadowColor = this.color;
+    fCtx.beginPath();
+    fCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    fCtx.fill();
+    fCtx.restore();
+  }
+  dead() { return this.alpha <= 0; }
+}
+
+class Rocket {
+  constructor(x) {
+    this.x = x ?? Math.random() * fCanvas.width * 0.8 + fCanvas.width * 0.1;
+    this.y = fCanvas.height + 10;
+    this.targetY = fCanvas.height * 0.15 + Math.random() * fCanvas.height * 0.45;
+    this.speed = 10 + Math.random() * 5;
+    this.color = FW_COLORS[Math.floor(Math.random() * FW_COLORS.length)];
+    this.trail = [];
+    this.exploded = false;
+    this.particles = [];
+  }
+  update() {
+    if (!this.exploded) {
+      this.trail.push({ x: this.x, y: this.y });
+      if (this.trail.length > 10) this.trail.shift();
+      this.y -= this.speed;
+      if (this.y <= this.targetY) { this.exploded = true; this.burst(); }
+    } else {
+      this.particles.forEach(p => p.update());
+      this.particles = this.particles.filter(p => !p.dead());
+    }
+  }
+  burst() {
+    const n = 70 + Math.floor(Math.random() * 50);
+    for (let i = 0; i < n; i++) this.particles.push(new Particle(this.x, this.y, this.color));
+    for (let i = 0; i < 25; i++) this.particles.push(new Particle(this.x, this.y, '#FFD700'));
+    for (let i = 0; i < 15; i++) this.particles.push(new Particle(this.x, this.y, 'white'));
+    const c2 = FW_COLORS[Math.floor(Math.random() * FW_COLORS.length)];
+    for (let i = 0; i < 20; i++) this.particles.push(new Particle(this.x, this.y, c2));
+  }
+  draw() {
+    if (!this.exploded) {
+      this.trail.forEach((t, i) => {
+        fCtx.save();
+        fCtx.globalAlpha = (i / this.trail.length) * 0.6;
+        fCtx.fillStyle = this.color;
+        fCtx.beginPath();
+        fCtx.arc(t.x, t.y, 2, 0, Math.PI * 2);
+        fCtx.fill();
+        fCtx.restore();
+      });
+      fCtx.save();
+      fCtx.globalAlpha = 1;
+      fCtx.fillStyle = 'white';
+      fCtx.shadowBlur = 10;
+      fCtx.shadowColor = this.color;
+      fCtx.beginPath();
+      fCtx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+      fCtx.fill();
+      fCtx.restore();
+    } else {
+      this.particles.forEach(p => p.draw());
+    }
+  }
+  dead() { return this.exploded && this.particles.length === 0; }
+}
+
+const rockets = [];
+let lastRocket = 0;
+let autoDelay = 800;
+
+function loop(t) {
+  pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+  petals.forEach(p => { p.update(t); p.draw(); });
+
+  fCtx.clearRect(0, 0, fCanvas.width, fCanvas.height);
+  if (t - lastRocket > autoDelay) {
+    rockets.push(new Rocket());
+    lastRocket = t;
+    autoDelay = 1200 + Math.random() * 1400;
+    if (Math.random() < 0.4) setTimeout(() => rockets.push(new Rocket()), 280);
+    if (Math.random() < 0.15) setTimeout(() => rockets.push(new Rocket()), 560);
+  }
+  for (let i = rockets.length - 1; i >= 0; i--) {
+    rockets[i].update();
+    rockets[i].draw();
+    if (rockets[i].dead()) rockets.splice(i, 1);
+  }
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+
+setTimeout(() => {
+  [0, 300, 600, 900, 1200].forEach((d) => {
+    setTimeout(() => rockets.push(new Rocket()), d);
+  });
+}, 600);
+
+fCanvas.addEventListener('click', e => {
+  rockets.push(new Rocket(e.clientX));
+  setTimeout(() => rockets.push(new Rocket(e.clientX + (Math.random()-0.5)*80)), 200);
+});
+
+// Audio autoplay
+const audio = document.getElementById('bg-audio');
+audio.volume = 0.7;
+audio.play().catch(() => {
+  const unlock = () => {
+    audio.play();
+    document.removeEventListener('click', unlock);
+    document.removeEventListener('touchstart', unlock);
+  };
+  document.addEventListener('click', unlock);
+  document.addEventListener('touchstart', unlock);
+});
+</script>
+</body>
+</html>
